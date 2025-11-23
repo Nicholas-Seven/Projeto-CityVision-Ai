@@ -1,0 +1,15 @@
+TESTES DE APRIMORAMENTO
+
+1- L. o primeiro agente conseguiu atingir os requisitos exigidos após o refinamento do prompt e funcionou de acordo com o mesmo e o seu detalhamento
+2- CL. a segunda agente funcionou corretamente como esperado nós testes.
+3- CA. a terceira agente funcionou corretamente como esperado nós testes.
+4- MA. a quarta agente não funcinou como esperado após o aprimoramento do prompt, e foi necessario refazer o prompt sendo nescessario impor uma restrição na agente.
+5- SI. o quinto agente funcionou corretamente como esperado nós testes.
+6- KE. o sexto agente não funcionou devidamente sendo necessário fazer o versionamento e aprimoramento do prompt sendo preciso versionar o prompt ate a versão v4 ( a quarta versão acabou sendo a mais minimalista das quatro versões).
+7- CJ. o setimo agente funcionou como esperado nós testes.
+
+TESTE FINAL
+
+No teste final foi analisado se todos os agentes executariam seus devidos papeis com exito, foi visto que apenas um deles acabou falhando em executar seu papel
+que no caso foi a agente 3-CA (Dra. Carla Silva) o desvio de foco e a não priorização de sua missão fundamental. 
+Em vez de cumprir a ordem de propor imediatamente as soluções de mobilidade (BRT, Ciclovias e Pedestrianização), ela se comportou como uma consultora técnica genérica, debatendo a viabilidade e os custos com a Engenheira Clara.

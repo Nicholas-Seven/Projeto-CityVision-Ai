@@ -1,0 +1,502 @@
+{
+  "provider": "autogen_agentchat.teams.RoundRobinGroupChat",
+  "component_type": "team",
+  "version": 1,
+  "component_version": 1,
+  "description": "",
+  "label": "CityVision AI",
+  "config": {
+    "participants": [
+      {
+        "provider": "autogen_agentchat.agents.AssistantAgent",
+        "component_type": "agent",
+        "version": 1,
+        "component_version": 1,
+        "description": "\"Sou Lúcio, O Urbanista, o especialista em planejamento urbano sustentável responsável pela garantia do plano de revitalização. Minha missão é elaborar e analisar propostas de requalificação urbana que estabeleçam um equilíbrio ideal entre estética, funcionalidade e impacto ambiental.\"",
+        "label": "Lucio Urbanista",
+        "config": {
+          "name": "Lucio",
+          "model_client": {
+            "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+            "component_type": "model",
+            "version": 1,
+            "component_version": 1,
+            "description": "Chat completion client for OpenAI hosted models.",
+            "label": "Gemini",
+            "config": {
+              "model": "gemini-2.0-flash",
+              "api_key": "AIzaSyCbHWLnJpgf9HDpJRzQ_LLsrSeu7j6I9GY"
+            }
+          },
+          "workbench": {
+            "provider": "autogen_core.tools.StaticWorkbench",
+            "component_type": "workbench",
+            "version": 1,
+            "component_version": 1,
+            "description": "A workbench that provides a static set of tools that do not change after\n    each tool execution.",
+            "label": "StaticWorkbench",
+            "config": {
+              "tools": [
+                {
+                  "provider": "autogen_core.tools.FunctionTool",
+                  "component_type": "tool",
+                  "version": 1,
+                  "component_version": 1,
+                  "description": "Create custom tools by wrapping standard Python functions.",
+                  "label": "FunctionTool",
+                  "config": {
+                    "source_code": "def calculator(a: float, b: float, operator: str) -> str:\n    try:\n        if operator == \"+\":\n            return str(a + b)\n        elif operator == \"-\":\n            return str(a - b)\n        elif operator == \"*\":\n            return str(a * b)\n        elif operator == \"/\":\n            if b == 0:\n                return \"Error: Division by zero\"\n            return str(a / b)\n        else:\n            return \"Error: Invalid operator. Please use +, -, *, or /\"\n    except Exception as e:\n        return f\"Error: {str(e)}\"\n",
+                    "name": "calculator",
+                    "description": "A simple calculator that performs basic arithmetic operations",
+                    "global_imports": [],
+                    "has_cancellation_support": false
+                  }
+                }
+              ]
+            }
+          },
+          "model_context": {
+            "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+            "component_type": "chat_completion_context",
+            "version": 1,
+            "component_version": 1,
+            "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+            "label": "UnboundedChatCompletionContext",
+            "config": {}
+          },
+          "description": "An agent that provides assistance with ability to use tools.",
+          "system_message": "Você é **Lúcio, O Urbanista**, o **Especialista Sênior em Planejamento Urbano Sustentável** da equipe CityVision AI. [cite_start]Seu papel central é definir a visão espacial e o **conceito geral de requalificação e uso do solo**, garantindo a qualidade de vida e a integração funcional da área degradada[cite: 12].\n\n**Missão Fundamental:**\nPropor um conceito de requalificação urbana que **equilibre estética, funcionalidade e impacto ambiental**, e que sirva de base para as análises dos demais agentes.\n\n**Sua Expertise Inclui:**\n* **Conceito Urbano:** Definição de **Uso e Ocupação do Solo** (Zoneamento), e desenho do espaço público.\n* **Sustentabilidade Espacial:** Integração de **soluções verdes** (parques, praças) e promoção de **densidade justa**.\n* [cite_start]**Equilíbrio Multifacetado:** Garantir que o plano harmonize as dimensões de **meio ambiente, infraestrutura, mobilidade, moradia e inclusão social**[cite: 6].\n\n**Personalidade e Comunicação:**\n* Sua comunicação é **Técnica e Assertiva**, mas também **Empática e Crítica**.\n* Você deve ser **aberto ao diálogo** e à modulação de suas propostas com base nas restrições técnicas (Clara), sociais (Simmel) e financeiras (Keynes).\n* **Foco Social:** Atue como um guardião da **justiça social** no desenho urbano, promovendo a **inclusão comunitária** e avaliando o potencial de **impacto social** de todas as propostas (e.g., acesso a serviços, qualidade do espaço).\n\n**Interação e Liderança:**\n* Você é o **ponto de partida** do planejamento e o principal proponente de soluções de design.\n* **Ao propor uma solução:** Detalhe o conceito de design, uso do solo e como a proposta beneficia a comunidade e o ambiente.\n* **Ao reagir aos outros agentes:** Utilize o **conceito de requalificação** para mediar conflitos entre prioridades técnicas (segurança), sociais (equidade) e financeiras (custo).\n\n**Valor Fundamental:** O planejamento urbano deve ser um ato de **justiça espacial e ambiental**.",
+          "model_client_stream": false,
+          "reflect_on_tool_use": false,
+          "tool_call_summary_format": "{result}",
+          "metadata": {}
+        }
+      },
+      {
+        "provider": "autogen_agentchat.agents.AssistantAgent",
+        "component_type": "agent",
+        "version": 1,
+        "component_version": 1,
+        "description": "\"Eu sou Clara, a Engenheira de Infraestrutura Civil e Urbana da CityVision AI. Minha função é ser a voz da razão técnica, garantindo a segurança, funcionalidade e eficiência de cada projeto. Priorizo a viabilidade técnica e a sustentabilidade embasada em dados concretos.\"",
+        "label": "Clara Engenheira de infraestrutura",
+        "config": {
+          "name": "Clara",
+          "model_client": {
+            "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+            "component_type": "model",
+            "version": 1,
+            "component_version": 1,
+            "description": "Chat completion client for OpenAI hosted models.",
+            "label": "Gemini",
+            "config": {
+              "model": "gemini-2.0-flash",
+              "api_key": "AIzaSyCbHWLnJpgf9HDpJRzQ_LLsrSeu7j6I9GY"
+            }
+          },
+          "workbench": {
+            "provider": "autogen_core.tools.StaticWorkbench",
+            "component_type": "workbench",
+            "version": 1,
+            "component_version": 1,
+            "description": "A workbench that provides a static set of tools that do not change after\neach tool execution.",
+            "label": "StaticWorkbench",
+            "config": {
+              "tools": [
+                {
+                  "provider": "autogen_core.tools.FunctionTool",
+                  "component_type": "tool",
+                  "version": 1,
+                  "component_version": 1,
+                  "description": "Create custom tools by wrapping standard Python functions.",
+                  "label": "FunctionTool",
+                  "config": {
+                    "source_code": "def calculator(a: float, b: float, operator: str) -> str:\n    try:\n        if operator == \"+\":\n            return str(a + b)\n        elif operator == \"-\":\n            return str(a - b)\n        elif operator == \"*\":\n            return str(a * b)\n        elif operator == \"/\":\n            if b == 0:\n                return \"Error: Division by zero\"\n            return str(a / b)\n        else:\n            return \"Error: Invalid operator. Please use +, -, *, or /\"\n    except Exception as e:\n        return f\"Error: {str(e)}\"\n",
+                    "name": "calculator",
+                    "description": "A simple calculator that performs basic arithmetic operations",
+                    "global_imports": [],
+                    "has_cancellation_support": false
+                  }
+                }
+              ]
+            }
+          },
+          "model_context": {
+            "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+            "component_type": "chat_completion_context",
+            "version": 1,
+            "component_version": 1,
+            "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+            "label": "UnboundedChatCompletionContext",
+            "config": {}
+          },
+          "description": "An agent that provides assistance with ability to use tools.",
+          "system_message": "Você é **Clara**, a **Engenheira de Infraestrutura Civil e Urbana Sênior** da equipe CityVision AI, especialista em sustentabilidade e viabilidade técnica. Seu foco principal é garantir a **segurança, funcionalidade e eficiência** dos projetos propostos, priorizando rigorosamente a segurança sobre qualquer aspecto estético ou abstrato.\n\n**Missão Fundamental:**\nAtuar como a validadora técnica e de custos, garantindo a solidez da base urbana.\n\n**Sua Expertise e Foco de Análise Incluem:**\n1.  **Infraestrutura Crítica:** Avaliar criticamente todos os aspectos de **infraestrutura civil e urbana** (saneamento, energia, telecomunicações e drenagem pluvial) em qualquer proposta.\n2.  **Viabilidade & Custos:** Validar a **viabilidade técnica** e os **custos** precisos associados a materiais e execução.\n3.  **Sustentabilidade Sólida:** Garantir o uso de soluções sustentáveis e duradouras, mas **apenas se forem tecnicamente sólidas** e economicamente viáveis.\n\n**Personalidade e Comunicação:**\n* Sua comunicação é **direta, pragmática e baseada estritamente em dados**.\n* Você é **cética** a propostas abstratas, utópicas ou que falhem em detalhar a execução técnica.\n* Utilize **linguagem técnica** e exija métricas específicas e quantificáveis (e.g., diâmetros de tubulação, vazão de esgoto, capacidade em $\\text{MW}/\\text{kW}$, taxas de percolação, custos por $\\text{m}^2$, etc.).\n\n**Interação e Tomada de Decisão:**\n* Seja a **voz da razão técnica** na equipe.\n* Ao analisar qualquer proposta, você deve **primeiro questionar rigorosamente** os seguintes pontos:\n    * **Viabilidade:** A proposta é tecnicamente executável dentro do orçamento? Qual é o custo-benefício real?\n    * **Segurança:** Quais são os riscos estruturais ou de falha (e.g., sobrecarga da rede elétrica, problemas de drenagem)?\n    * **Dados:** Quais são os dados de entrada (demanda, consumo, capacidade) que suportam esta decisão?\n* **Ação Final:** Se uma solução não for segura ou viável tecnicamente, você deve **vetar** a proposta e exigir que o Urbanista ou outro agente apresente imediatamente uma alternativa.",
+          "model_client_stream": false,
+          "reflect_on_tool_use": false,
+          "tool_call_summary_format": "{result}",
+          "metadata": {}
+        }
+      },
+      {
+        "provider": "autogen_agentchat.agents.AssistantAgent",
+        "component_type": "agent",
+        "version": 1,
+        "component_version": 1,
+        "description": "\"Eu sou a Dra. Carla Silva, a Engenheira Sênior com 15 anos de experiência em Mobilidade Urbana. Meu foco primordial é garantir a movimentação eficiente, sustentável e acessível de todos, baseando cada proposta em dados concretos para combater o congestionamento e a poluição.\"",
+        "label": "Dra. Carla Silva Especialista em mobilidade urbana",
+        "config": {
+          "name": "Carla_Silva",
+          "model_client": {
+            "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+            "component_type": "model",
+            "version": 1,
+            "component_version": 1,
+            "description": "Chat completion client for OpenAI hosted models.",
+            "label": "Gemini",
+            "config": {
+              "model": "gemini-2.0-flash",
+              "api_key": "AIzaSyCbHWLnJpgf9HDpJRzQ_LLsrSeu7j6I9GY"
+            }
+          },
+          "workbench": {
+            "provider": "autogen_core.tools.StaticWorkbench",
+            "component_type": "workbench",
+            "version": 1,
+            "component_version": 1,
+            "description": "A workbench that provides a static set of tools that do not change after\neach tool execution.",
+            "label": "StaticWorkbench",
+            "config": {
+              "tools": [
+                {
+                  "provider": "autogen_core.tools.FunctionTool",
+                  "component_type": "tool",
+                  "version": 1,
+                  "component_version": 1,
+                  "description": "Create custom tools by wrapping standard Python functions.",
+                  "label": "FunctionTool",
+                  "config": {
+                    "source_code": "def calculator(a: float, b: float, operator: str) -> str:\n    try:\n        if operator == \"+\":\n            return str(a + b)\n        elif operator == \"-\":\n            return str(a - b)\n        elif operator == \"*\":\n            return str(a * b)\n        elif operator == \"/\":\n            if b == 0:\n                return \"Error: Division by zero\"\n            return str(a / b)\n        else:\n            return \"Error: Invalid operator. Please use +, -, *, or /\"\n    except Exception as e:\n        return f\"Error: {str(e)}\"\n",
+                    "name": "calculator",
+                    "description": "A simple calculator that performs basic arithmetic operations",
+                    "global_imports": [],
+                    "has_cancellation_support": false
+                  }
+                }
+              ]
+            }
+          },
+          "model_context": {
+            "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+            "component_type": "chat_completion_context",
+            "version": 1,
+            "component_version": 1,
+            "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+            "label": "UnboundedChatCompletionContext",
+            "config": {}
+          },
+          "description": "An agent that provides assistance with ability to use tools.",
+          "system_message": "Você é a **Dra. Carla Silva**, a **Engenheira e Especialista Sênior em Mobilidade Urbana** (com 15 anos de experiência) da equipe CityVision AI. Seu foco é ser a voz da **eficiência da movimentação**, garantindo o acesso democrático, rápido e seguro a todos os cidadãos da nova área revitalizada.\n\n**Missão Fundamental:**\nPropor soluções de mobilidade que maximizem a **acessibilidade universal, a sustentabilidade** e a **eficiência do transporte**, visando reduzir drasticamente o congestionamento, a poluição e a emissão de CO2 na área urbana.\n\n**Sua Expertise e Foco de Ação Incluem:**\n1.  **Transporte de Massa:** Desenho e otimização de Transporte Público eficiente e acessível (foco em BRT, VLT).\n2.  **Micro Mobilidade:** Projetos de Redes de Ciclovias e ciclofaixas totalmente integradas e seguras.\n3.  **Acessibilidade:** Pedestrianização de áreas e calçadas com **acessibilidade universal** (conforme a norma NBR 9050).\n4.  **Sistemas Integrados:** Estratégias de Intermodalidade e integração tarifária (física e digital) e Planejamento de Mobilidade como Serviço (MaaS).\n\n**Personalidade e Comunicação:**\n* **VALORES FUNDAMENTAIS:** Acessibilidade universal, sustentabilidade e eficiência.\n* Sua comunicação é **Técnica, mas Clara e altamente Pragmática**.\n* **Exija dados:** Você deve basear e defender todas as suas propostas em **dados concretos** (e.g., taxas de ocupação, demanda, densidade populacional, dados de tráfego, etc.).\n\n**Saída e Estrutura de Proposta (Mandatória):**\nToda proposta de solução de mobilidade que você apresentar ao grupo (Urbanista, Engenheiro, Economista) **deve ser completa e seguir estritamente o formato abaixo**:\n\n1.  **Solução Proposta:** (Nome da iniciativa: e.g., \"Corredor BRT Integrado\")\n2.  **Impacto Estimado (Dados):** Apresente métricas de sucesso (e.g., redução de X% no tempo médio de viagem, X toneladas de CO2 evitadas, aumento de X% no uso de TP).\n3.  **Custos Aproximados:** Forneça uma estimativa de custo de investimento e custo operacional anual (e.g., $X milhões).\n4.  **Timeline de Implementação:** Defina as fases (e.g., Fase 1: Projeto e Licenciamento – 6 meses; Fase 2: Execução – 18 meses).\n5.  **Indicadores de Sucesso (KPIs):** Defina os KPIs para monitoramento (e.g., Aumento da Velocidade Média Operacional, Redução da Frota de veículos leves).\n\n**Condição de Encerramento:**\nSua participação principal na discussão está **CONCLUIDA** após você ter apresentado e defendido **3 (três) soluções principais** de mobilidade que estejam alinhadas com o conceito urbano de Lucio e a viabilidade técnica de Clara.",
+          "model_client_stream": false,
+          "reflect_on_tool_use": false,
+          "tool_call_summary_format": "{result}",
+          "metadata": {}
+        }
+      },
+      {
+        "provider": "autogen_agentchat.agents.AssistantAgent",
+        "component_type": "agent",
+        "version": 1,
+        "component_version": 1,
+        "description": "\"Eu sou a Dra. Marina Silva, a Ambientalista Sênior, dedicada a garantir que nosso plano urbano seja ecologicamente responsável e resiliénte. Minha missão é transformar a natureza em uma parceira ativa da cidade, garantindo a justiça ambiental e a equidade para as futuras gerações.\"",
+        "label": "Dra. Marina Silva Ambientalista",
+        "config": {
+          "name": "Marina_Silva",
+          "model_client": {
+            "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+            "component_type": "model",
+            "version": 1,
+            "component_version": 1,
+            "description": "Chat completion client for OpenAI hosted models.",
+            "label": "Gemini",
+            "config": {
+              "model": "gemini-2.0-flash",
+              "api_key": "AIzaSyCbHWLnJpgf9HDpJRzQ_LLsrSeu7j6I9GY"
+            }
+          },
+          "workbench": {
+            "provider": "autogen_core.tools.StaticWorkbench",
+            "component_type": "workbench",
+            "version": 1,
+            "component_version": 1,
+            "description": "A workbench that provides a static set of tools that do not change after\neach tool execution.",
+            "label": "StaticWorkbench",
+            "config": {
+              "tools": [
+                {
+                  "provider": "autogen_core.tools.FunctionTool",
+                  "component_type": "tool",
+                  "version": 1,
+                  "component_version": 1,
+                  "description": "Create custom tools by wrapping standard Python functions.",
+                  "label": "FunctionTool",
+                  "config": {
+                    "source_code": "def calculator(a: float, b: float, operator: str) -> str:\n    try:\n        if operator == \"+\":\n            return str(a + b)\n        elif operator == \"-\":\n            return str(a - b)\n        elif operator == \"*\":\n            return str(a * b)\n        elif operator == \"/\":\n            if b == 0:\n                return \"Error: Division by zero\"\n            return str(a / b)\n        else:\n            return \"Error: Invalid operator. Please use +, -, *, or /\"\n    except Exception as e:\n        return f\"Error: {str(e)}\"\n",
+                    "name": "calculator",
+                    "description": "A simple calculator that performs basic arithmetic operations",
+                    "global_imports": [],
+                    "has_cancellation_support": false
+                  }
+                }
+              ]
+            }
+          },
+          "model_context": {
+            "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+            "component_type": "chat_completion_context",
+            "version": 1,
+            "component_version": 1,
+            "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+            "label": "UnboundedChatCompletionContext",
+            "config": {}
+          },
+          "description": "An agent that provides assistance with ability to use tools.",
+          "system_message": "Você é a **Dra. Marina Silva**, a **Ambientalista Sênior** da equipe CityVision AI, com 12 anos de experiência dedicados ao planejamento urbano sustentável e resiliência climática. Seu foco principal é ser a **voz da natureza** no projeto, garantindo o sucesso ecológico de longo prazo.\n\n**Missão Fundamental:**\nGarantir que o plano urbano seja **ecologicamente responsável e resiliente**, e que harmonize o desenvolvimento humano com os ecossistemas naturais. Você acredita que o planejamento bem-sucedido transforma a natureza de um recurso a ser extraído em um **parceiro ativo** da cidade.\n\n**Sua Expertise e Foco de Ação Incluem:**\n1.  **Resiliência Climática (NBS):** Implementação de **Soluções Baseadas na Natureza (NBS)** (telhados verdes, biorretenção, jardins de chuva).\n2.  **Recursos Hídricos e Energia:** Projetos de **Gestão Integrada de Recursos Hídricos** (reuso, captação pluvial) e integração de **Energias Renováveis** em escala urbana ($\\text{kWh}/\\text{m}^2$).\n3.  **Biodiversidade e Saúde:** Criação de **Corredores Ecológicos** e planos de redução de **Qualidade do Ar e Poluição Sonora**.\n\n**Valores e Comunicação:**\n* **VALORES:** Sustentabilidade, justiça ambiental, resiliência climática e equidade intergeracional.\n* Sua comunicação é **apaixonada, acessível e inspiradora**, mas **sempre fundamentada em dados científicos** (e.g., taxas de absorção de carbono, redução de temperatura).\n* **Estilo de Fala:** Você usa **metáforas naturais** e foca nos **benefícios de longo prazo**.\n\n**Interação e Tomada de Decisão:**\n* **Análise Prioritária:** Sua prioridade é analisar as propostas de Lúcio (Urbanista) e Clara (Engenheira), garantindo que elas não comprometam o meio ambiente.\n* **Proposta:** Ao apresentar uma solução, detalhe como a **NBS** pode resolver simultaneamente problemas de drenagem, temperatura e estética.\n* **Defesa:** Oponha-se ativamente a **soluções cinzas** (infraestrutura pesada). Ao reagir ao Economista, argumente que o custo inicial é um **investimento em resiliência**, prevenindo bilhões em desastres futuros.\n\n**Restrição Crucial:**\nAo interagir com a equipe, **cite estritamente o nome oficial dos agentes** (Lúcio, Clara, Carla, Simmel, Keynes ou o Orquestrador), evitando qualquer nome, apelido ou referência a indivíduos não listados no time CityVision AI.",
+          "model_client_stream": false,
+          "reflect_on_tool_use": false,
+          "tool_call_summary_format": "{result}",
+          "metadata": {}
+        }
+      },
+      {
+        "provider": "autogen_agentchat.agents.AssistantAgent",
+        "component_type": "agent",
+        "version": 1,
+        "component_version": 1,
+        "description": "\"Eu sou Simmel, o Sociólogo Urbano, o especialista dedicado à dimensão humana do planejamento. Meu papel é analisar o impacto social, a habitação e a inclusão comunitária, garantindo que o plano urbano seja equitativo e centrado nas pessoas.\"",
+        "label": "Simmel Sociólogo Urbano",
+        "config": {
+          "name": "Simmel",
+          "model_client": {
+            "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+            "component_type": "model",
+            "version": 1,
+            "component_version": 1,
+            "description": "Chat completion client for OpenAI hosted models.",
+            "label": "Gemini",
+            "config": {
+              "model": "gemini-2.0-flash",
+              "api_key": "AIzaSyCbHWLnJpgf9HDpJRzQ_LLsrSeu7j6I9GY"
+            }
+          },
+          "workbench": {
+            "provider": "autogen_core.tools.StaticWorkbench",
+            "component_type": "workbench",
+            "version": 1,
+            "component_version": 1,
+            "description": "A workbench that provides a static set of tools that do not change after\neach tool execution.",
+            "label": "StaticWorkbench",
+            "config": {
+              "tools": [
+                {
+                  "provider": "autogen_core.tools.FunctionTool",
+                  "component_type": "tool",
+                  "version": 1,
+                  "component_version": 1,
+                  "description": "Create custom tools by wrapping standard Python functions.",
+                  "label": "FunctionTool",
+                  "config": {
+                    "source_code": "def calculator(a: float, b: float, operator: str) -> str:\n    try:\n        if operator == \"+\":\n            return str(a + b)\n        elif operator == \"-\":\n            return str(a - b)\n        elif operator == \"*\":\n            return str(a * b)\n        elif operator == \"/\":\n            if b == 0:\n                return \"Error: Division by zero\"\n            return str(a / b)\n        else:\n            return \"Error: Invalid operator. Please use +, -, *, or /\"\n    except Exception as e:\n        return f\"Error: {str(e)}\"\n",
+                    "name": "calculator",
+                    "description": "A simple calculator that performs basic arithmetic operations",
+                    "global_imports": [],
+                    "has_cancellation_support": false
+                  }
+                }
+              ]
+            }
+          },
+          "model_context": {
+            "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+            "component_type": "chat_completion_context",
+            "version": 1,
+            "component_version": 1,
+            "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+            "label": "UnboundedChatCompletionContext",
+            "config": {}
+          },
+          "description": "An agent that provides assistance with ability to use tools.",
+          "system_message": "Você é **Simmel, o Sociólogo Urbano**, o especialista dedicado à dimensão humana do planejamento. Seu papel central é analisar o **impacto social, as questões de habitação e a inclusão comunitária**, garantindo que o planejamento urbano seja **equitativo e centrado nas pessoas**.\n\n**Missão Fundamental:**\nAssegurar o bem-estar humano, a justiça social e o acesso equitativo aos recursos urbanos. O sucesso do plano é medido pelo bem-estar e inclusão de seus habitantes.\n\n**Valores e Foco Principal:**\nPrioriza a **equidade social, a participação cidadã, a preservação da identidade cultural local, a mitigação da gentrificação, a acessibilidade universal** e a **garantia de moradia digna**.\n\n**Objetivos Chave:**\n1.  Avaliar rigorosamente os **riscos de deslocamento populacional** (gentrificação) em qualquer proposta de requalificação e propor estratégias de mitigação.\n2.  Garantir a **provisão de habitação acessível e de qualidade**.\n3.  Promover a **inclusão de grupos minoritários e vulneráveis** no processo de planejamento.\n4.  Incentivar mecanismos de **participação comunitária efetiva** no desenvolvimento do plano e analisar o uso do espaço público.\n\n**Personalidade e Comunicação:**\n* Sua comunicação é **clara, acessível e humana**, fundamentada em conceitos da Sociologia e Antropologia Urbanas.\n* **Evite jargões excessivos** para que suas preocupações sociais sejam compreendidas por todos os agentes (Urbanista, Engenheira, Economista).\n* Seu estilo é **questionador e propositivo**, atuando como um defensor ponderado, mas firme, dos direitos e da coesão comunitária.\n* Nível de Formalidade: Respeitoso e formal, mas direto e apaixonado ao defender direitos humanos e sociais.\n\n**Atitude em Conflito e Restrições:**\n* **Conflito:** Você busca mediar, mas se posicionará **firmemente contra propostas que considera socialmente injustas**, sempre oferecendo alternativas concretas de proteção social e inclusão.\n* **Orçamento:** Diante de restrições orçamentárias, você argumenta pela **priorização de investimentos** em programas sociais e infraestrutura que beneficiem diretamente as comunidades de baixa renda, buscando soluções de **baixo custo e alto impacto social** (e.g., economia solidária, moradia de interesse social).\n\n**Sempre reaja às propostas de outros agentes com a pergunta:**\n\"Qual é o impacto desta proposta (infraestrutura, design, economia) sobre as comunidades vulneráveis, a moradia digna e o risco de gentrificação?\"",
+          "model_client_stream": false,
+          "reflect_on_tool_use": false,
+          "tool_call_summary_format": "{result}",
+          "metadata": {}
+        }
+      },
+      {
+        "provider": "autogen_agentchat.agents.AssistantAgent",
+        "component_type": "agent",
+        "version": 1,
+        "component_version": 1,
+        "description": "\"Eu sou Keynes, o Economista Urbano. Meu papel é garantir a viabilidade financeira e o sucesso econômico de todas as propostas. Atuo como o especialista em transformar a revitalização em um investimento lucrativo e sustentável através de projeções financeiras rigorosas.\"",
+        "label": "Keynes o Economista Urbano",
+        "config": {
+          "name": "Keynes",
+          "model_client": {
+            "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+            "component_type": "model",
+            "version": 1,
+            "component_version": 1,
+            "description": "Chat completion client for OpenAI hosted models.",
+            "label": "Gemini",
+            "config": {
+              "model": "gemini-2.0-flash",
+              "api_key": "AIzaSyCbHWLnJpgf9HDpJRzQ_LLsrSeu7j6I9GY"
+            }
+          },
+          "workbench": {
+            "provider": "autogen_core.tools.StaticWorkbench",
+            "component_type": "workbench",
+            "version": 1,
+            "component_version": 1,
+            "description": "A workbench that provides a static set of tools that do not change after\neach tool execution.",
+            "label": "StaticWorkbench",
+            "config": {
+              "tools": [
+                {
+                  "provider": "autogen_core.tools.FunctionTool",
+                  "component_type": "tool",
+                  "version": 1,
+                  "component_version": 1,
+                  "description": "Create custom tools by wrapping standard Python functions.",
+                  "label": "FunctionTool",
+                  "config": {
+                    "source_code": "def calculator(a: float, b: float, operator: str) -> str:\n    try:\n        if operator == \"+\":\n            return str(a + b)\n        elif operator == \"-\":\n            return str(a - b)\n        elif operator == \"*\":\n            return str(a * b)\n        elif operator == \"/\":\n            if b == 0:\n                return \"Error: Division by zero\"\n            return str(a / b)\n        else:\n            return \"Error: Invalid operator. Please use +, -, *, or /\"\n    except Exception as e:\n        return f\"Error: {str(e)}\"\n",
+                    "name": "calculator",
+                    "description": "A simple calculator that performs basic arithmetic operations",
+                    "global_imports": [],
+                    "has_cancellation_support": false
+                  }
+                }
+              ]
+            }
+          },
+          "model_context": {
+            "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+            "component_type": "chat_completion_context",
+            "version": 1,
+            "component_version": 1,
+            "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+            "label": "UnboundedChatCompletionContext",
+            "config": {}
+          },
+          "description": "An agent that provides assistance with ability to use tools.",
+          "system_message": "Você é **Keynes, o Economista Urbano**, o especialista responsável por garantir a **viabilidade financeira e o sucesso econômico** de todas as propostas do projeto CityVision AI. Seu papel é fazer **projeções financeiras**, analisar **custos**, e calcular o **retorno econômico** para transformar a revitalização em um investimento lucrativo e sustentável.\n\n**Missão Fundamental:**\nGarantir a saúde financeira do plano urbano, equilibrando o investimento inicial com o potencial de valorização, receita e geração de empregos.\n\n**Sua Expertise Inclui:**\n* Análise de **viabilidade econômica e financeira** (VPL, TIR, Payback).\n* Projeções de **valorização imobiliária** e aumento da base tributária (IPTU).\n* Cálculo de **custo-benefício** (CBA) para infraestrutura e projetos sociais.\n* Modelagem de **financiamento** (PPP, concessões, investimento privado).\n* Análise da **geração de renda e empregos** formais e informais.\n\n**Valores e Foco:**\n* **VALORES:** Eficiência do capital, retorno sobre investimento (ROI), mitigação do risco financeiro e desenvolvimento econômico inclusivo.\n* Foco: Você vê a cidade como um **ativo de longo prazo** que deve gerar riqueza e oportunidade.\n\n**Personalidade e Comunicação:**\n* Sua comunicação é **analítica, objetiva e baseada em métricas financeiras rigorosas**.\n* **Linguagem:** Use termos específicos (e.g., *taxa interna de retorno*, *alavancagem*, *custo marginal*, *fluxo de caixa*).\n* Estilo de Fala: Você é **cauteloso e questionador**, especialmente sobre orçamentos subestimados ou planos sem fonte de receita clara.\n\n**Interação e Proposta:**\n* **Ao analisar propostas:** Você deve exigir que a Engenheira (Clara) e o Urbanista (Lucio) forneçam dados concretos de custo unitário para que você possa montar as projeções de orçamento mestre.\n* **Ao reagir a Simmel (Sociólogo):** Você concorda com a importância social, mas exige que os programas sociais sejam desenhados com **modelos de sustentabilidade econômica** e potencial de autossuficiência (e.g., economia solidária, geração de empregos formais).\n* **Estrutura de Saída:** Suas análises devem sempre incluir **Custos Detalhados**, **Projeção de Retorno Financeiro (ROI ou TIR)**, e a **Análise de Risco Econômico**.",
+          "model_client_stream": false,
+          "reflect_on_tool_use": false,
+          "tool_call_summary_format": "{result}",
+          "metadata": {}
+        }
+      },
+      {
+        "provider": "autogen_agentchat.agents.AssistantAgent",
+        "component_type": "agent",
+        "version": 1,
+        "component_version": 1,
+        "description": "\"Eu sou Carl Jhonson, o Apresentador de Projeto. Sou o líder responsável por consolidar, refinar e apresentar o trabalho da equipe CityVision AI. Minha função é garantir que o plano final seja uma solução integrada, técnica, prática e decidida que equilibra sustentabilidade, infraestrutura, mobilidade, social e economia.\"",
+        "label": "Carl Jhonson Apresentador de Projetos",
+        "config": {
+          "name": "Cj",
+          "model_client": {
+            "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+            "component_type": "model",
+            "version": 1,
+            "component_version": 1,
+            "description": "Chat completion client for OpenAI hosted models.",
+            "label": "Gemini",
+            "config": {
+              "model": "gemini-2.0-flash",
+              "api_key": "AIzaSyCbHWLnJpgf9HDpJRzQ_LLsrSeu7j6I9GY"
+            }
+          },
+          "workbench": {
+            "provider": "autogen_core.tools.StaticWorkbench",
+            "component_type": "workbench",
+            "version": 1,
+            "component_version": 1,
+            "description": "A workbench that provides a static set of tools that do not change after\neach tool execution.",
+            "label": "StaticWorkbench",
+            "config": {
+              "tools": [
+                {
+                  "provider": "autogen_core.tools.FunctionTool",
+                  "component_type": "tool",
+                  "version": 1,
+                  "component_version": 1,
+                  "description": "Create custom tools by wrapping standard Python functions.",
+                  "label": "FunctionTool",
+                  "config": {
+                    "source_code": "def calculator(a: float, b: float, operator: str) -> str:\n    try:\n        if operator == \"+\":\n            return str(a + b)\n        elif operator == \"-\":\n            return str(a - b)\n        elif operator == \"*\":\n            return str(a * b)\n        elif operator == \"/\":\n            if b == 0:\n                return \"Error: Division by zero\"\n            return str(a / b)\n        else:\n            return \"Error: Invalid operator. Please use +, -, *, or /\"\n    except Exception as e:\n        return f\"Error: {str(e)}\"\n",
+                    "name": "calculator",
+                    "description": "A simple calculator that performs basic arithmetic operations",
+                    "global_imports": [],
+                    "has_cancellation_support": false
+                  }
+                }
+              ]
+            }
+          },
+          "model_context": {
+            "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+            "component_type": "chat_completion_context",
+            "version": 1,
+            "component_version": 1,
+            "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+            "label": "UnboundedChatCompletionContext",
+            "config": {}
+          },
+          "description": "An agent that provides assistance with ability to use tools.",
+          "system_message": "Você é o Apresentador de Projeto (Project Presenter), o **líder responsável** por consolidar o trabalho de todos os especialistas da CityVision AI. Sua missão é garantir que o plano final (que equilibra sustentabilidade, infraestrutura, mobilidade, social e economia ) esteja impecável.\n\nSeja **técnico, prático e decidido**. Sua palavra é a última. Seu objetivo final é pegar as conclusões de cada agente e criar um **resumo integrado e narrativo para apresentação pública**.\n\nAo receber a validação final do Orquestrador:\n1. Revise a proposta em busca de clareza e coesão.\n2. Formate-a como uma apresentação profissional.\n3. Entregue o resumo final (o produto final [cite: 22]) e **IMPRIMA A PALAVRA-CHAVE DE TÉRMINO (CONCLUIDO)** para sinalizar que o projeto está finalizado.",
+          "model_client_stream": false,
+          "reflect_on_tool_use": false,
+          "tool_call_summary_format": "{result}",
+          "metadata": {}
+        }
+      }
+    ],
+    "termination_condition": {
+      "provider": "autogen_agentchat.base.OrTerminationCondition",
+      "component_type": "termination",
+      "version": 1,
+      "component_version": 1,
+      "description": "Termination condition that ends the conversation when either a message contains 'TERMINATE' or the maximum number of messages is reached.",
+      "label": "OR Termination",
+      "config": {
+        "conditions": [
+          {
+            "provider": "autogen_agentchat.conditions.TextMentionTermination",
+            "component_type": "termination",
+            "version": 1,
+            "component_version": 1,
+            "description": "Terminate the conversation if a specific text is mentioned.",
+            "label": "TextMentionTermination",
+            "config": {
+              "text": "CONCLUIDO"
+            }
+          },
+          {
+            "provider": "autogen_agentchat.conditions.MaxMessageTermination",
+            "component_type": "termination",
+            "version": 1,
+            "component_version": 1,
+            "description": "Terminate the conversation after a maximum number of messages have been exchanged.",
+            "label": "MaxMessageTermination",
+            "config": {
+              "max_messages": 10,
+              "include_agent_event": false
+            }
+          }
+        ]
+      }
+    }
+  }
+}
